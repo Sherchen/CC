@@ -6,6 +6,7 @@ buildscript {
     repositories {
         maven{ url rootProject.file("repo-local") }
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenCentral()
         google()
         jcenter()
     }
@@ -15,7 +16,7 @@ buildscript {
 
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'com.billy.android:cc-register:1.0.6'
+        classpath 'com.billy.android:cc-register:1.0.16-SNAPSHOT'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -24,7 +25,9 @@ buildscript {
 
 allprojects {
     repositories {
+        maven{ url rootProject.file("repo-local") }
         maven { url "https://jitpack.io" }
+        mavenCentral()
         google()
         jcenter()
     }

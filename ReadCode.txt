@@ -1,0 +1,11 @@
+1.gradle中的ext.mainApp=true代表这个module始终以app方式运行
+2.gradle中的ext.alwaysLib=true代表这个module始终以library方式运行
+3.local.properties中的assemble_aar_for_cc_component=true则代表是aar打包
+4.local.properties中的moduleName=true,则代表module不会加入到主app的编译
+5.主app添加依赖，如果是library project:addComponent 'demo_component_a',如果是maven: addComponent 'demo_component_a',"maven"
+
+
+----------------------------------
+优势
+可以跨进程调用，这个跨进程内部是通过AIDL实现的
+----------------------------------

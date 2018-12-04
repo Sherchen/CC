@@ -39,11 +39,15 @@ class ProjectModuleManager {
             println("${PLUGIN_NAME}: local.properties not found")
         }
         initByTask(project)
-
+        println "mainModuleName:$mainModuleName"
         def mainApp = isMainApp(project)
+        println "project name:$project.name and mainApp:$mainApp"
         def assembleFor = isAssembleFor(project)
+        println "project name:$project.name and assembleFor:$assembleFor"
         def buildingAar = isBuildingAar(localProperties)
+        println "buildingAar:$buildingAar"
         def alwaysLib = isAlwaysLib(project)
+        println "project name:$project.name and alwaysLib:$alwaysLib"
 
         boolean runAsApp = false
         if (mainApp) {
@@ -132,11 +136,14 @@ class ProjectModuleManager {
     static void addComponentDependencyMethod(Project project, Properties localProperties) {
         //当前task是否为给本module打apk包
         def curModuleIsBuildingApk = taskIsAssemble && (mainModuleName == null && isMainApp(project) || mainModuleName == project.name)
-        project.ext.addComponent = { dependencyName, realDependency = null ->
+        project.ext.addComponent = { String dependencyName, realDependency = null ->
             //不是在为本app module打apk包，不添加对组件的依赖
             if (!curModuleIsBuildingApk)
                 return
-            def excludeModule = 'true' == localProperties.getProperty(dependencyName)
+            def propertyValue = localProperties.getProperty(dependencyName)
+            println "dependencyName is $dependencyName and propertyValue is $propertyValue"
+            def excludeModule = 'true' == propertyValue
+            println "dependencyName is $dependencyName and excludeModule is $excludeModule"
             if (!excludeModule) {
                 def componentProject = project.rootProject.subprojects.find { it.name == dependencyName }
                 def dependencyMode = (project.gradle.gradleVersion as float) >= 4.1F ? 'api' : 'compile'
@@ -161,6 +168,8 @@ class ProjectModuleManager {
                                     "\nyou can specify the real dependency via add the 2nd param, for example: " +
                                     "addComponent '$dependencyName', 'com.billy.demo:demoB:1.1.0'")
                 }
+            }else {
+                println "CC excludeMode >>> exclude $dependencyName"
             }
         }
     }

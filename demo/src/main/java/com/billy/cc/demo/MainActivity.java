@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .build()
                         .callAsyncCallbackOnMainThread(printResultCallback);
                 break;
-            case R.id.login_user_state_observer:
+            case R.id.login_user_state_observer: //wsq 添加动态组件
                 if (loginUserObserverComponent == null) {
                     addDynamicComponent();
                 } else {
